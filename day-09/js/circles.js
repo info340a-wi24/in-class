@@ -11,7 +11,7 @@ const NS = 'http://www.w3.org/2000/svg';
 // State of our application
 let state = {
     circles: [],
-    size: 10
+//    size: 10
 };
 
 // Create a `p` element DOM
@@ -57,7 +57,8 @@ function renderCircle(coord, parent) {
     let circle = document.createElementNS(NS,'circle');
     circle.setAttribute('cx',coord.x);
     circle.setAttribute('cy',coord.y);
-    circle.setAttribute('r',state.size); // do something cool here
+    circle.setAttribute('r', 10); // do something cool here
+    //circle.setAttribute('r',state.size); 
 
     // Define styles
     circle.style.opacity = 0.3;
@@ -89,7 +90,7 @@ function clearCircles(parent) {
 // - call the `update` function
 svg.addEventListener('click', function(event) {
     state.circles.push({ x: event.offsetX, y: event.offsetY});
-    state.size++;
+    //state.size++;
     update();
 });
 
@@ -135,6 +136,6 @@ function updateText(data) {
 // Reset state.circles to an empty array and then `update`
 button.addEventListener('click', function() {
     state.circles = [];
-    state.size = 10;
+    //state.size = 10;
     update();
 });
