@@ -42,10 +42,13 @@ document.addEventListener('keydown', function(event){
 
 
 //get all style sheet links, log them, then add even listeners to each
+
+
 let listItems = document.querySelectorAll(".styles li");
 console.log(listItems);
 for(var i in Object.keys(listItems)) {
-    comsole.log(listItems[i])
+    comsole.log(listItems[i].id);
+    doSomething()
 }
 
 
