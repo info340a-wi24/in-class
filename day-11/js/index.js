@@ -20,9 +20,9 @@ $('form').submit(function (event) {
         .then(function (response) {
             return response.json();
         })
-    // Pass the results to renderSearchResults, make sure to CATCH
+    // Pass the results to renderSearchResults, 
         .then(renderSearchResults)
-    // Any of your errors
+    // make sure to CATCH any of your errors
         .catch(function (error){
             console.error(error);
         })
