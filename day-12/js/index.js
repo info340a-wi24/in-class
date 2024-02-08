@@ -4,10 +4,7 @@
 // Class Puppy
 class Puppy {
     // Constructor: takes in an img url, and a sound
-    constructor(
-        img = "https://www.boredpanda.com/blog/wp-content/uploads/2023/02/puppies-are-the-best-models-omica-photography-fb26.png",
-        sound = "WOOF!"
-                ) {
+    constructor(img, sound) {
         this.img = img;
         this.sound = sound;
     }
