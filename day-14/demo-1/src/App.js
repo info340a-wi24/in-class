@@ -1,50 +1,46 @@
-// Import Components
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { range } from 'lodash';
 import { MarkSeries, XYPlot, HorizontalGridLines, VerticalGridLines, XAxis, YAxis } from 'react-vis';
 import '../node_modules/react-vis/dist/style.css';
-import './App.css'
+import './App.css';
 
-class App extends Component {
-    // Constructor: set intial number of points
-    constructor(props) {
-        super(props);
-        this.state = {
-            numPoints: 10
-        };
-        this.updatePoints = this.updatePoints.bind(this)
-    }
+const App = () => {
+  // Use useState hook for managing state
+  const [numPoints, setNumPoints] = useState(10);
 
-    // Update points: to be assigned to input as event listener
-    updatePoints(event) {
-        this.setState({
-            numPoints: event.target.value
-        })
-    }
+  // Update points: to be assigned to input as event listener
+  const updatePoints = (event) => {
+    setNumPoints(event.target.value);
+  };
 
-    // Render method
-    render() {
-        // Compute a set of points from state
-        let points = range(this.state.numPoints).map((d) => ({
-            x: Math.random() * 100,
-            y: Math.random() * 100
-        }));
+  // Compute a set of points from state
+  const points = range(numPoints).map(() => ({
+    x: Math.random() * 100,
+    y: Math.random() * 100,
+  }));
 
-        // Return a chart
-        return (
-            <div className="container">
-              <label htmlFor="num-points">Number of points: </label>
-              <input id="num-points" type="number" onChange={ this.updatePoints } value={ this.state.numPoints } />
-              <XYPlot height={ 300 } width={ 300 }>
-                <MarkSeries data={ points } />
-                <HorizontalGridLines />
-                <VerticalGridLines />
-                <XAxis title="X Axis" />
-                <YAxis title="Y Axis" />
-              </XYPlot>
-            </div>
-            );
-    }
-}
+  // Return a chart
+  return (
+    <div className="container">
+        {/* Input for updating the number of points */}
+        <label htmlFor="num-points">Number of points: </label>
+        <input id="num-points" type="number" onChange={updatePoints} value={numPoints} />
+
+        {/* XYPlot component for displaying the chart */}
+        <XYPlot height={300} width={300}>
+            {/* MarkSeries component displaying the data points */}
+            <MarkSeries data={points} />
+
+            {/* Grid lines for better visualization */}
+            <HorizontalGridLines />
+            <VerticalGridLines />
+
+            {/* X and Y axis with titles */}
+            <XAxis title="X Axis" />
+            <YAxis title="Y Axis" />
+      </XYPlot>
+    </div>
+  );
+};
 
 export default App;
