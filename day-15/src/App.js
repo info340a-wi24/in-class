@@ -35,6 +35,7 @@ function App() {
   return (
     <div className="container">
         <div>
+          <h1>Olympics!</h1>
           <BarChart width={800} height={300} data={chartData}>
             <CartesianGrid strokeDashArray="3 3" />
             <XAxis dataKey="key" />
