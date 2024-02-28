@@ -7,11 +7,11 @@ In this activity, we'll walk through **all** of the steps of building an interac
 
 2. Move this `README.md` file back into the folder. Also, move the `data/` folder into the recently created `public/` folder. This is where you'll need to store publicly accessible content (`.csv` files, images, etc.).
 
-3. We'll a variety of data manipulation functions from the `d3` (i.e., loading data, grouping data, etc.). Use `npm` to _install_ the `d3` package, making sure to **save it** to your `package.json` file.
+3. We'll a variety of data manipulation functions from the `d3` and `d3-collection` libraries (i.e., loading data, grouping data, etc.). Use `npm` to _install_ the `d3` and `d3-collection` packages, making sure to **save it** to your `package.json` file (this happens automatically with newer versions of node).
 
-4. Open up your `App.js` file and remove all unnecessary content(some `import` statements, the current content returned by the `render()` method, etc.).
+4. Open up your `App.js` file and remove all unnecessary content(some `import` statements, the current content in the `return` method, etc.).
 
-5. Write a `constructor` method in which you set the initial state. You should define `data` to an empty array, and `xVariable` to `sport`.
+5. Import and leverage `setState` you set the initial state. You should define `data` to an empty array, and `xVariable` to `sport`.
 
 6. Now we'll **load our data**. To do this, import the `d3` package. Then, create a `componentDidMount()` method on your `App` class that loads the data from `data/medalists.csv`. Load your data with the `d3.csv` method, then should set the `data` attribute of state to trigger a re-rendering. To see if this worked, add a `console.log` statement to your `render()` method where you log the data.
 
