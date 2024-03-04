@@ -12,7 +12,6 @@ import {
 
 import { initializeApp } from "firebase/app";
 import { firebaseConfig } from './Config';
-import firebase from 'firebase/app';
 import { 
   getAuth, 
   createUserWithEmailAndPassword, 
