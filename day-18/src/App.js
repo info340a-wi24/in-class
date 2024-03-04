@@ -1,17 +1,35 @@
 import React, { useState, useEffect } from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import {
+  Container,
+  FormGroup,
+  Label,
+  Input,
+  Button,
+  Alert,
+} from 'reactstrap';
 
 import { initializeApp } from "firebase/app";
 import { firebaseConfig } from './Config';
 import firebase from 'firebase/app';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, onAuthStateChanged, signOut } from 'firebase/auth';
+import { 
+  getAuth, 
+  createUserWithEmailAndPassword, 
+  signInWithEmailAndPassword, 
+  updateProfile, 
+  onAuthStateChanged, 
+  signOut 
+} from 'firebase/auth';
 
+// Initialize Firebase app with the provided configuration
 const app = initializeApp(firebaseConfig);
+
+// Get authentication instance
 const auth = getAuth(app);
 
 
-// Import your other components here
+// Import your other components here as needed
 
 
 function App() {
@@ -81,68 +99,85 @@ function App() {
       try {
           // Sign out the user
           await signOut(auth);
+          setEmail('');
+          setPassword('');
+          setUsername('');
 
         } catch (error) {
           setErrorMessage(error.message);
       }
   };
 
-  let welcomeDiv = user === null ? <h1>Sign in or Sign-up below!</h1> : <div className='alert alert-info'>Hello, {user.displayName}!</div>;
-  let errorDiv = errorMessage === "" ? "" : <div className='alert alert-danger'>Error: {errorMessage}!</div>;
+  const welcomeDiv = user === null ? <h1>Sign in or Sign-up below!</h1> : <Alert color="info">Hello, {user.displayName}</Alert>;
+  const errorDiv = errorMessage === "" ? "" : <Alert color='danger'>Error: {errorMessage}</Alert>;
+ 
+
+  const isValidEmail = (email) => {
+    // Regular expression for a simple email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const isReadytoSubmit = !!user || (!isValidEmail(email) || password === '');
 
   // Create (and render) divs to welcome the user / show errors 
   return (
-    <div className="container">
-        {welcomeDiv}
-        <div className="form-group">
-            <label>Email:</label>
-            <input
-                className="form-control"
-                name="email"
-                value={email}
-                onChange={(event) => handleChange(event)}
-            />
-        </div>
+    <Container>
+      {welcomeDiv}
+      <FormGroup floating>
+      <Input
+          id="email"
+          type="email"
+          name="email"
+          placeholder="Email"
+          valid={isValidEmail(email)}
+          invalid={!isValidEmail(email)}
+          value={email}
+          onChange={(event) => handleChange(event)}
+        />
+        <Label for="email">Email</Label>
+      </FormGroup>
 
-        <div className="form-group">
-            <label>Password:</label>
-            <input
-                type="password"
-                className="form-control"
-                name="password"
-                value={password}
-                onChange={(event) => handleChange(event)}
-            />
-        </div>
+      <FormGroup floating>
+        <Input
+          id="password"
+          type="password"
+          name="password"
+          placeholder="Password"
+          value={password}
+          onChange={(event) => handleChange(event)}
+        />
+        <Label>Password</Label>
+      </FormGroup>
 
-        <div className="form-group">
-            <label>Username:</label>
-            <input
-                className="form-control"
-                name="username"
-                value={username}
-                onChange={(event) => handleChange(event)}
-            />
-        </div>
+      <FormGroup floating>
+        
+        <Input
+          id="username"
+          //no type for username
+          name="username"
+          placeholder="Username"
+          value={username}
+          onChange={(event) => handleChange(event)}
+        />
+        <Label>Username</Label>
+      </FormGroup>
 
-        <div className="form-group">
-            <button className="btn btn-primary mr-2" onClick={handleSignUp}>
-                Sign Up
-            </button>
-            <button className="btn btn-success mr-2" onClick={handleSignIn}>
-                Sign In
-            </button>
-            <button className="btn btn-danger mr-2" onClick={handleSignOut}>
-                Sign Out
-            </button>
-        </div>
-
-        {errorMessage && (
-            <div className="alert alert-danger" role="alert">
-                {errorMessage}
-            </div>
-        )}
-    </div>
+      <FormGroup>
+        <Button color="primary" className="mr-2" onClick={handleSignUp} disabled={isReadytoSubmit || username === ''}>
+          Sign Up
+        </Button>
+        {' '}
+        <Button color="success" className="mr-2" onClick={handleSignIn} disabled={isReadytoSubmit || username !== ''}>
+          Sign In
+        </Button> 
+        {' '}
+        <Button color="danger" className="mr-2" onClick={handleSignOut} disabled={user === null}>
+          Sign Out
+        </Button>
+      </FormGroup>
+      {errorDiv}
+    </Container>
   );
 }
 
